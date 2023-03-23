@@ -1,0 +1,60 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+:root{ 
+    --swiper-theme-color: white !important;
+}
+
+#root {
+    z-index: 1;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    position: relative;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Open sans', sans-serif;
+    background-color: fcolor(light-grey-full);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+.svg {
+    fill: fcolor(main-dark);
+    margin-right: 6px;
+}
+
+.mt {
+    margin-top: 0.5em;
+}
+
+.indent {
+    text-indent: 2.5em;
+}
+
+picture img {
+    width: 100%;
+    height: 100%;
+}

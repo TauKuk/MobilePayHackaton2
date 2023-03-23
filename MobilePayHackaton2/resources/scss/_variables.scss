@@ -1,0 +1,30 @@
+@import 'galano-fonts';
+@import 'orgon-fonts';
+
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$font-weights: (
+    "bold": 700,
+    "semibold": 500,
+    "regular": 400,
+    "light": 300
+);
+
+$colors: (
+    "dark-blue": rgb(52, 86, 121),
+    "light-blue": rgb(56, 96, 175),
+    "secondary-blue": rgb(51, 153, 255),
+    "light-grey": rgba(228, 228, 228, 0.253),
+    "light-grey-full": rgba(248, 248, 248),
+    "border-grey": rgb(158, 158, 158),
+    "contacts-grey": rgb(220, 220, 220),
+    "main-light": #e5cad2,
+    "main-medium": #dd8ea3,
+    "main-dark": #995973,
+);
