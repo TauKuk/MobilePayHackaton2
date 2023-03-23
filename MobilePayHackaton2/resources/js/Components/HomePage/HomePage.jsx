@@ -10,7 +10,7 @@ export default function HomePage() {
         return (
             <a className="event--tile" href={"/events/" + event.id}>
                 <div className="event--id_name">                
-                    <div className="event--id">{ event.id }. </div>
+                    {/* <div className="event--id">{ event.id }. </div> */}
                     <div className="event--name">{ event.name }</div>
                 </div>
 
@@ -27,9 +27,9 @@ export default function HomePage() {
                 <div className="home--container">
                     <h2 className="challenges--header">Dabartiniai iššūkiai</h2>
                     { currentEvents }
-                    <h2 className="challenges--header">Būsimi iššūkiai</h2>
+                    {/* <h2 className="challenges--header">Būsimi iššūkiai</h2>
 
-                    <h2 className="challenges--header">Praėję iššūkiai</h2>
+                    <h2 className="challenges--header">Praėję iššūkiai</h2> */}
 
                 </div>
             </div>

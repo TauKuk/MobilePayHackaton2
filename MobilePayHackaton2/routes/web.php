@@ -28,6 +28,12 @@ Route::get('/event/create', function () {
 });
 Route::post('/event/create', [CreateEventController::class, 'store'])->name("eventCreate");
 
+Route::get('/event/delete/{eventID}', [CreateEventController::class, 'askDelete']);
+Route::post('/event/deleteTrue', [CreateEventController::class, 'destroy'])->name('trueDelete');
+
+Route::get('/event/update/{eventID}', [CreateEventController::class, 'update']);
+Route::post('/event/update', [CreateEventController::class, 'storeUpdate'])->name('updateEvent');
+
 Route::get('/events/{eventID}', [CreateEventController::class, 'show']);
 
 // Route::middleware('auth')->group(function () {

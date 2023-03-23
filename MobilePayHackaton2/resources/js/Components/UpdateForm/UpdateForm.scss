@@ -1,6 +1,9 @@
 @import '../../SCSS/fonts';
 @import '../../SCSS/resets';
 
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
 .create--form {
     width: 90%;
     margin-inline: auto;
@@ -22,7 +25,7 @@
     border: 0;
     cursor: pointer;
     font-family: Orgon-medium;
-    font-size: 20px;
+    font-size: 16px;
     background-color: #413961;
     color: white;
     width: 250px;

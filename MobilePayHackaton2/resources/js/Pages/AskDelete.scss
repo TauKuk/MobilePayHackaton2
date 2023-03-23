@@ -1,0 +1,30 @@
+.delete--confirmation {
+    width: 90%;
+    height: 100px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.delete--title {
+    font-size: 24px;
+    font-family: "Orgon-medium";
+    text-align: center;
+}
+
+.event--button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    font-family: Orgon-medium;
+    font-size: 16px;
+    background-color: #413961;
+    color: white;
+    width: 150px;
+    padding: 15px 30px;
+    margin-left: 10px;
+}

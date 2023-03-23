@@ -18,6 +18,40 @@ class CreateEventController extends Controller
         return Inertia::render('Event', compact("challenge"));        
     }
 
+    public function askDelete($eventID) {       
+        $challenge = Challenge::where('id', $eventID)->get();
+        return Inertia::render('AskDelete', compact("challenge"));        
+    }
+
+    public function update($eventID) {       
+        $challenge = Challenge::where('id', $eventID)->get();
+        return Inertia::render('Update', compact("challenge"));        
+    }
+
+    public function storeUpdate(Request $request) {       
+        $data = $this->validateCreate($request);
+
+        Challenge::where('id', $request->id)->update([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'max_score' => $data['max_score'],
+            'type' => $data['type'],
+            'total_distance_km' => $data['total_distance_km'],
+        ]);
+
+        $challenges = Challenge::all();
+        return Inertia::render('Home', compact("challenges"));        
+    }
+
+    public function destroy(Request $request) { 
+        // dd($request);      
+        $challenge = Challenge::find($request->id);
+        $challenge->delete();
+
+        $challenges = Challenge::all();
+        return Inertia::render('Home', compact("challenges"));    
+    }
+
     public function store(Request $request) {       
         $data = $this->validateCreate($request);
 

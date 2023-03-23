@@ -2,17 +2,52 @@
 @import '../../SCSS/resets';
 
 .event--wrapper {
-    margin-inline: 100px;
-}
-
-.event--container {
+    width: 90%;
     margin-inline: auto;
 
     background-color: #EBEAEC;
     border-radius: 26px;
-
-    height: 500px;
-    width: 100%;
     
     padding-block: 25px;
+}
+
+.event--container {
+    margin: 20px;
+}
+
+.event--title {
+    font-size: 26px;
+    font-family: "Galano-medium";
+    margin-bottom: 10px;
+}
+
+.event--info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.event--description {
+    display: flex;
+    align-items: flex-end;
+}
+
+.event--buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0;
+        cursor: pointer;
+        font-family: Orgon-medium;
+        font-size: 16px;
+        background-color: #413961;
+        color: white;
+        width: 150px;
+        padding: 15px 30px;
+        margin-left: 10px;
+    }
 }

@@ -7,11 +7,31 @@ export default function EventViewContent() {
     var { challenge } = usePage().props;
 
     challenge = challenge[0];
+    var types = {
+        begimas: "Bėgimas",
+        dviraciai: "Dviračiai",
+        ejimas: "Ėjimas"
+    }
+
     return (
         <>
            <div className="event--wrapper">
                 <div className="event--container">
-                    <h2>{challenge.name}</h2>
+                    <div className="event--info">
+                        <div className="event--basic--info">
+                            <h2 className="event--title">{challenge.name}</h2>
+                            <div className="event--type">Tipas: {types[challenge.type]}</div>
+                            <div className="event--track--size">Iššūkio atstumas: {challenge.total_distance_km} km</div>
+                            <div className="event--max--score">Maksimalus taškų skaičius: {challenge.max_score}</div>
+                        </div>
+
+                        {challenge.description ? <div className="event--description">Aprašymas: {challenge.description}</div> : ""}
+                    </div>
+
+                    <div className="event--buttons">
+                        <a href={"/event/delete/" + challenge.id}>Ištrinti</a>
+                        <a href={"/event/update/" + challenge.id}>Redaguoti</a>
+                    </div>
                 </div>
             </div>
         </>

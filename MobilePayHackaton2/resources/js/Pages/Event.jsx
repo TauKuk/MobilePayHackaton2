@@ -7,10 +7,10 @@ import EventViewContent from '../Components/EventViewContent/EventViewContent';
 function Event() {
   return (
     <div className="App">
-            <main>        
-                <NavBarAuth />
-                <EventViewContent />
-            </main>
+        <main>        
+            <NavBarAuth />
+            <EventViewContent />
+        </main>
         <Footer />
     </div>
   );

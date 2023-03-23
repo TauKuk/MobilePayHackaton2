@@ -1,25 +1,31 @@
 import React from "react";
 
 import { useForm } from "@inertiajs/inertia-react";
-import "./EventCreateContent.scss"
+import "./UpdateForm.scss"
+import { usePage } from "@inertiajs/inertia-react";
 
-export default function EventCreateContent() {
+export default function UpdateForm() {
+    var { challenge } = usePage().props;
+
+    challenge = challenge[0];
+
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        description: "",
-        max_score: "",
-        type: "",
-        total_distance_km: "",
+        name: challenge.name,
+        description: ( challenge.description ? challenge.description : "" ),
+        max_score: challenge.max_score,
+        type: challenge.type,
+        total_distance_km: challenge.total_distance_km,
+        id: challenge.id,
     });
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('eventCreate'));
+        post(route('updateEvent'));
     };
 
     return (
         <>
-            <div className="create--title">Sukurti iššūkį</div>        
+            <div className="create--title">Redaguoti iššūkį</div>        
             <form onSubmit={submit} className="create--form">                                
             <div className="challenge--input--container">
                 <label htmlFor="name">Pavadinimnas</label>
@@ -56,7 +62,7 @@ export default function EventCreateContent() {
                 <div className="edit--error">{ errors.total_distance_km }</div>
             </div>
 
-            <button className="create--button" type="submit" disabled={processing}>Sukurti iššūkį</button>
+            <button className="create--button" type="submit" disabled={processing}>Redaguoti iššūkį</button>
         </form>
         </>
 
