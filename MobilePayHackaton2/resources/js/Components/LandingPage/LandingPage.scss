@@ -1,0 +1,129 @@
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
+.landing--main--container {
+    background: rgb(73,97,205);
+    background: linear-gradient(90deg, rgba(73,97,205,1) 0%, rgba(76,60,142,1) 100%);
+}
+
+.landing--page--center {
+    padding: 50px 75px 50px 100px;
+    color: white; 
+
+    font-family: "Galano-medium";
+    height: 100%;
+
+    .landing--info {
+        width: 40%;
+        height: 100%;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.landing--description {
+    font-family: "Galano-light";
+    font-size: 16px;
+}
+
+.landing--name {
+    font-family: "Galano-medium";
+    font-size: 32px;
+
+    margin-bottom: 20px;
+}
+
+.landing--info {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    text-align: left;
+}
+
+.landing--button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    font-family: Orgon-medium;
+    font-size: 20px;
+    background: rgb(189,201,255);
+    background: linear-gradient(270deg, rgba(189,201,255,1) 0%, rgba(245,245,242,1) 100%);
+    color: black;
+    padding: 20px 55px;
+}
+
+.landing--popup--animation {
+    position: relative;
+
+    bottom: 0px;
+    left: 0px;
+
+    margin-top: 50px;
+
+    transition: .2s all;
+}
+
+.landing--popup--animation:hover, .landing--popup--animation:focus {
+    position: relative;
+
+    bottom: 5px;
+    left: 5px;
+}
+
+.landing--tiles {
+    display: flex;
+}
+
+.landing--tile {
+    flex: 1 0 33%;
+    border-bottom: 4px solid black;
+    border-top: 4px solid black;
+
+    img {
+        width: 100%;
+    }
+}
+
+.landing--image {
+    display: flex;
+    flex-direction: column;
+}
+
+.challenges--title {
+    font-size: 28px;
+    font-family: "Galano-medium";
+
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing--tile--title {
+    font-size: 28px;
+    font-family: "Galano";
+}
+
+@media only screen and (max-width: 1100px) {
+    .landing--page--center { 
+        .landing--info {
+            width: 75%;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .landing--page--center { 
+        .landing--info {
+            width: 100%;
+        }
+    }
+}

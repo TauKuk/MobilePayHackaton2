@@ -1,0 +1,70 @@
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
+.home--wrapper {
+    margin-inline: 100px;
+}
+
+.home--container {
+    margin-inline: auto;
+
+    background-color: #EBEAEC;
+    border-radius: 26px;
+
+    height: 500px;
+    width: 100%;
+    
+    padding-block: 25px;
+}
+
+.challenges--header {
+    color: black;
+    font-size: 32px;
+
+    font-family: "Galano-medium";
+    width: 90%;
+    text-align: left;
+    margin-inline: auto;
+
+    border-bottom: 3px solid black;
+}
+
+.event--tile {
+    position: relative;
+    bottom: 0;
+    left: 0;
+
+    background-color: white;
+    padding: 5px;
+    padding-block: 10px;
+    margin-block: 10px;
+    width: 90%;
+    margin-inline: auto;
+
+    border: 1px solid black;
+
+    display: flex;
+    border-radius: 12px;
+
+    font-family: "Orgon";
+    
+    > * {
+        flex: 1 0 20%;
+    }
+    transition: .2s all;
+}
+
+.event--tile:hover, .event--tile:focus {
+    position: relative;
+    bottom: 5px;
+    left: 5px;
+}
+
+.event--id_name {
+    display: flex;
+    margin-left: 10px;
+}
+
+.event--id {
+    margin-right: 5px;
+}

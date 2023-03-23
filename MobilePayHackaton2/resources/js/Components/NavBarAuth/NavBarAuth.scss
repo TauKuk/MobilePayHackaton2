@@ -1,0 +1,325 @@
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
+.nav--container {
+    background: rgb(232,232,229);
+    background: linear-gradient(90deg, rgba(232,232,229,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+.nav--bar {    
+    width: 1400px;
+    margin: 0 auto;
+}
+
+.nav--top {
+    height: 100px;
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 100px;
+}
+
+.nav--info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.nav--links {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.nav--links > li {
+    line-height: 18px;
+    letter-spacing: -0.05em;
+    margin: 0 2em;
+}
+
+.nav--links > li > a {
+    color: white; 
+    transition: 0.1s color;
+}
+
+.sign--in--buttons {
+    display: flex;
+}
+
+.login--button {
+    border: 3px solid white;
+    padding: 12px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.right--arrow {
+    height: 15px;
+    width: 15px;
+    margin-left: 15px;
+}
+
+.register--button {
+    border: 0;
+    background-color: #FF7874;    
+    color: white !important;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger--bottom {
+    display: none;
+}
+
+.toggle--btn, .toggle--icon {
+    display: none;
+}
+
+.login--button, .register--button {
+    cursor: pointer;
+}
+
+.anchor {
+    visibility: hidden;
+}
+
+.nav--auth--container {
+    background: rgb(232,232,229);
+    background: linear-gradient(180deg, rgba(232,232,229,1) 0%, rgba(255,255,255,1) 100%);
+    background-position: 70% top;
+
+    font-family: "Galano-medium";
+    background-size: cover;
+}
+
+.nav--auth--top{
+    background-color: unset;
+}
+
+.nav--links > li > a {
+    color: #4961CD; 
+    transition: color 0.2s;
+}
+
+.nav--links > li > a:hover, .nav--links > li > a:focus {
+    color: #312939; 
+}
+
+.extended{
+    height: 260px;
+}
+
+@media only screen and (max-width: 1150px) {
+    .nav--auth--top{
+        background-position: 70% 10%;
+        background-size: cover;
+    }
+
+    .nav--auth--container {
+        height: 100px;
+        background-image: none;
+    }
+
+    .auth--bar {        
+        background: white;
+    }    
+    
+    .auth--bar::before, .auth--bar::after {
+        background-color: white;
+    }
+}
+
+@media only screen and (max-width: 1450px) {
+    .nav--bar {
+        width: 1200px;
+    }
+
+    .nav--links > li {
+        margin: 0 1em;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .nav--bar {
+        width: 1100px;
+    }
+
+    .nav--links > li {
+        margin: 0 0.75em;
+    }
+}
+
+@media only screen and (max-width: 1150px) {    
+    .anchor {
+        display: block;
+        position: relative;
+        top: -100px;
+    }
+
+    .nav--links {
+        display: none;
+    }
+
+    .nav--bar {
+        z-index: 10;
+    }
+
+    .nav--top {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100vw;
+        padding: 0 2em;
+        z-index: inherit;
+    }
+
+    .nav--auth--top {
+        background: rgb(232,232,229);
+        background: linear-gradient(180deg, rgba(232,232,229,1) 0%, rgba(255,255,255,1) 100%);
+    }
+
+    .burger--bottom {
+        opacity: 0;
+        z-index: -1;
+
+        position: fixed;
+        display: block;
+        top: 100px;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+
+        background: white;
+
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .burger--bottom > .burger--links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+    }
+
+    .burger--bottom > .burger--links > li {
+        border-bottom: 2px solid #4961CD;
+        margin: 1em 0;
+    }
+
+    .burger--links > li > a {
+        color: #4961CD;
+    }
+    
+    .toggle--icon {
+        float: right;
+
+        margin: 25px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25px;
+        height: 21px;
+        cursor: pointer;
+    }
+
+    .bar {        
+        position: relative;
+
+        height: 3px;
+        width: 100%;
+
+        margin-top: 9px;
+
+        background: #4961CD;
+        border-radius: 10px;
+
+        transition: background .2s ease-out;
+    }    
+    
+    .bar::before {
+        content: "";
+        height: 100%;
+        width: 100%;
+
+        position: absolute;
+        top: -7px;
+        right: 0;
+        transition: all .2s ease-out;
+
+        background-color: #4961CD;
+        border-radius: 10px;
+    }
+
+    .bar::after {
+        content: "";
+        height: 100%;
+        width: 100%;
+
+        position: absolute;
+        top: 7px;
+        right: 0;
+        transition: all .2s ease-out;
+
+        background-color: #4961CD;
+        border-radius: 10px;
+    }
+
+    .nav-menu {
+        clear: both;
+        overflow: hidden;
+        width: 100%;
+        max-height: 0;
+
+        text-align: center;
+        transition: max-height .2s ease-out;
+    }
+
+    .toggle--btn:default ~ .nav-menu {      
+        max-height: 272px;
+    }
+
+    .toggle--btn:default ~ .toggle--icon .bar {      
+        background: transparent;
+    }
+
+    .toggle--btn:default ~ .toggle--icon .bar::before {      
+        top: 0;
+        transform: rotate(45deg);
+    }
+
+    .toggle--btn:default ~ .toggle--icon .bar::after {      
+        top: 0;
+        transform: rotate(-45deg);
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .nav--top {
+        padding: 0 2em;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .toggle--icon {
+        margin-right: 1em;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .toggle--icon {
+        margin-right: 1em;
+    }
+}

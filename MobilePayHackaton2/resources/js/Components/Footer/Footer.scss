@@ -1,0 +1,15 @@
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
+footer {
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(232,232,229,1) 100%);
+    padding-block: 10px;
+    padding-top: 40px;
+}
+
+.footer--copyright {
+    font-family: "Orgon-light";
+    font-size: 14px;
+    color: black;
+}
