@@ -6,7 +6,9 @@
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",
-        "@inertiajs/react": "^1.0.0",
+        "@inertiajs/inertia": "^0.11.0",
+        "@inertiajs/inertia-react": "^0.8.1",
+        "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-react": "^3.0.0",
         "autoprefixer": "^10.4.12",
@@ -19,10 +21,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@inertiajs/inertia": "^0.11.1",
-        "@inertiajs/inertia-react": "^0.8.1",
-        "@inertiajs/react": "^1.0.2",
-        "inertia": "^0.0.7",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "sass": "^1.59.3",

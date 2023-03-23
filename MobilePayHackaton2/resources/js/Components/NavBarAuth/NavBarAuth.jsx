@@ -13,7 +13,7 @@ export default function NavBarAuth() {
             <nav className="nav--bar">
                 <div className='nav--top nav--auth--top'>
                     <div className="nav--info">
-                        <a href="/home#">
+                        <a href="/">
                             <img src="/Images/Logo.png" alt="Logo" className="logo" />
                         </a>
                     </div>
@@ -25,6 +25,7 @@ export default function NavBarAuth() {
                     </label>  
 
                     <ul className="nav--links">
+                        <li><a href="/event/create">Sukurti iššūkį</a></li>
                         <li><a href="#">Atsijungti</a></li>
                     </ul>
                 </div>
@@ -35,6 +36,7 @@ export default function NavBarAuth() {
                         transition: (openBurger ? "opacity 0.2s" : "opacity 0s")
                     }}>
                         <ul className='burger--links'>                            
+                            <li onClick={handleOpenBurger}><a href="/event/create">Sukurti iššūkį</a></li>
                             <li onClick={handleOpenBurger}><a href="#">Atsijungti</a></li>
                         </ul>
                 </div>

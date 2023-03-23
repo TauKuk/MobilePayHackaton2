@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\CreateEventController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +21,14 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('App');
 });
+Route::get('/home', [CreateEventController::class, 'index']);
 
-Route::get('/home', function () {
-    return Inertia::render('Home');
+Route::get('/event/create', function () {
+    return Inertia::render('EventCreate');
 });
+Route::post('/event/create', [CreateEventController::class, 'store'])->name("eventCreate");
 
-Route::get('/events/{eventID}', function () {
-    return Inertia::render('Event');
-});
+Route::get('/events/{eventID}', [CreateEventController::class, 'show']);
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/home', function () {

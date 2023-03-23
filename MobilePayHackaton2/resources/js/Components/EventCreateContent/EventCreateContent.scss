@@ -1,0 +1,46 @@
+@import '../../SCSS/fonts';
+@import '../../SCSS/resets';
+
+.create--form {
+    width: 90%;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    input, select {
+        width: 250px;
+    }
+}
+
+.create--button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    font-family: Orgon-medium;
+    font-size: 20px;
+    background-color: #413961;
+    color: white;
+    width: 250px;
+    padding: 20px 55px;
+}
+
+.challenge--input--container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-block: 10px;
+
+    > label {font-family: "Orgon"; }
+}
+
+.create--title {
+    text-align: center;
+    font-family: "Galano-medium";
+    font-size: 28px;
+}
+

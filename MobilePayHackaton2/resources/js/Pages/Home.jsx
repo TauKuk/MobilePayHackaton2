@@ -7,12 +7,10 @@ import HomePage from "../Components/HomePage/HomePage";
 export default function Home() {
     return (
         <div className="App">
-            <div>
+            <main>                
                 <NavBarAuth />
-                <main>
-                    <HomePage />
-                </main> 
-            </div>                             
+                <HomePage />
+            </main> 
             
             <Footer />
         </div>

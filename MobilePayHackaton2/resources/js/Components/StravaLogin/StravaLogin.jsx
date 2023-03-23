@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function StravaLogin() {
   const clientId = "104420";
-  const redirectUri = "http://localhost:3000";
+  const redirectUri = "http://localhost:8000";
   const responseType = 'code';
   const scope = 'read,activity:read_all';
 
