@@ -24,6 +24,10 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 });
 
+Route::get('/events/{eventID}', function () {
+    return Inertia::render('Event');
+});
+
 // Route::middleware('auth')->group(function () {
 //     Route::get('/home', function () {
 //         return Inertia::render('Home');
