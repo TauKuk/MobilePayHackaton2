@@ -1,5 +1,6 @@
 import './NavBarAuth.scss';
 import React, { useState } from 'react';
+import { Link } from '@inertiajs/inertia-react';
 
 export default function NavBarAuth() {
     const [openBurger, setOpenBurger] = useState(false);
@@ -26,7 +27,7 @@ export default function NavBarAuth() {
 
                     <ul className="nav--links">
                         <li><a href="/event/create">Sukurti iššūkį</a></li>
-                        <li><a href="#">Atsijungti</a></li>
+                        <li><Link href={route('logout')} method="post">Atsijungti</Link></li>
                     </ul>
                 </div>
                 <div className='burger--bottom'
@@ -37,7 +38,7 @@ export default function NavBarAuth() {
                     }}>
                         <ul className='burger--links'>                            
                             <li onClick={handleOpenBurger}><a href="/event/create">Sukurti iššūkį</a></li>
-                            <li onClick={handleOpenBurger}><a href="#">Atsijungti</a></li>
+                            <li onClick={handleOpenBurger}><Link href={route('logout')} method="post">Atsijungti</Link></li>
                         </ul>
                 </div>
             </nav>

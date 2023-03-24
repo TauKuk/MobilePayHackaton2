@@ -16,6 +16,7 @@ export default function UpdateForm() {
         type: challenge.type,
         total_distance_km: challenge.total_distance_km,
         id: challenge.id,
+        hasEnded: challenge.hasEnded,
     });
 
     const submit = (e) => {
@@ -60,6 +61,12 @@ export default function UpdateForm() {
                 <label htmlFor="total_distance_km">Iššūkio atstumas (km)</label>
                 <input type="number" className="challenge--input" id="total_distance_km" value={data.total_distance_km} onChange={e => {setData('total_distance_km', e.target.value)}} autoComplete="false"/>
                 <div className="edit--error">{ errors.total_distance_km }</div>
+            </div>
+
+            <div className="challenge--input--container challenge--input--checkbox">
+                <label htmlFor="hasEnded">Pasibaigė</label>
+                <input type="checkbox" className="challenge--input" id="hasEnded"checked={ data.hasEnded } onChange={e => setData('hasEnded', e.target.checked)}/>
+                <div className="edit--error">{ errors.hasEnded }</div>
             </div>
 
             <button className="create--button" type="submit" disabled={processing}>Redaguoti iššūkį</button>

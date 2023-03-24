@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "@inertiajs/inertia-react";
 import "./EventCreateContent.scss"
 
+import { usePage } from "@inertiajs/inertia-react";
+
 export default function EventCreateContent() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",

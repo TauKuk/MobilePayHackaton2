@@ -15,17 +15,27 @@ class CreateEventController extends Controller
 
     public function show($eventID) {       
         $challenge = Challenge::where('id', $eventID)->get();
-        return Inertia::render('Event', compact("challenge"));        
+        $stravaID = session('stravaID');
+
+        return Inertia::render('Event', compact("challenge", 'stravaID'));           
     }
 
-    public function askDelete($eventID) {       
+    public function askDelete($eventID) {     
+        $stravaID = session('stravaID');
         $challenge = Challenge::where('id', $eventID)->get();
-        return Inertia::render('AskDelete', compact("challenge"));        
+
+        if ($challenge[0]->stravaID != $stravaID) return redirect()->route('home');
+
+        return Inertia::render('AskDelete', compact("challenge", 'stravaID'));        
     }
 
-    public function update($eventID) {       
+    public function update($eventID) {  
+        $stravaID = session('stravaID');
         $challenge = Challenge::where('id', $eventID)->get();
-        return Inertia::render('Update', compact("challenge"));        
+
+        if ($challenge[0]->stravaID != $stravaID) return redirect()->route('home');
+
+        return Inertia::render('Update', compact("challenge", 'stravaID'));        
     }
 
     public function storeUpdate(Request $request) {       
@@ -37,6 +47,8 @@ class CreateEventController extends Controller
             'max_score' => $data['max_score'],
             'type' => $data['type'],
             'total_distance_km' => $data['total_distance_km'],
+            'stravaID' => session('stravaID'),
+            'hasEnded' => $data['hasEnded']
         ]);
 
         $challenges = Challenge::all();
@@ -52,7 +64,8 @@ class CreateEventController extends Controller
         return Inertia::render('Home', compact("challenges"));    
     }
 
-    public function store(Request $request) {       
+    public function store(Request $request) {    
+        $request['hasEnded'] = false;
         $data = $this->validateCreate($request);
 
         $challenge = Challenge::create([
@@ -61,6 +74,8 @@ class CreateEventController extends Controller
             'max_score' => $data['max_score'],
             'type' => $data['type'],
             'total_distance_km' => $data['total_distance_km'],
+            'stravaID' => session('stravaID'),
+            'hasEnded' => 0,
         ]);
 
         $challenge->save();
@@ -76,6 +91,7 @@ class CreateEventController extends Controller
             'max_score' => ['required', 'integer', "min:1"],
             'type' => ['required', 'string'],
             'total_distance_km' => ['required', 'numeric', "min: 0.1"],
+            'hasEnded' => ['required']
         ]);          
     }
 }

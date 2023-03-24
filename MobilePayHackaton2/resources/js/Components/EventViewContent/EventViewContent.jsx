@@ -4,7 +4,7 @@ import "./EventViewContent.scss"
 import { usePage } from "@inertiajs/inertia-react";
 
 export default function EventViewContent() {
-    var { challenge } = usePage().props;
+    var { challenge, stravaID } = usePage().props;
 
     challenge = challenge[0];
     var types = {
@@ -28,10 +28,17 @@ export default function EventViewContent() {
                         {challenge.description ? <div className="event--description">Aprašymas: {challenge.description}</div> : ""}
                     </div>
 
-                    <div className="event--buttons">
-                        <a href={"/event/delete/" + challenge.id}>Ištrinti</a>
-                        <a href={"/event/update/" + challenge.id}>Redaguoti</a>
-                    </div>
+                    {
+                        challenge.stravaID == stravaID                   
+                            &&
+                        (
+                            <div className="event--buttons">
+                                <a href={"/event/delete/" + challenge.id}>Ištrinti</a>
+                                <a href={"/event/update/" + challenge.id}>Redaguoti</a>
+                            </div>
+                        )
+                    }
+
                 </div>
             </div>
         </>

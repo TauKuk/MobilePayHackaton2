@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CreateEventController;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,22 +19,27 @@ use Illuminate\Support\Facades\Http;
 */
 
 Route::get('/', function () {
+    if (session('stravaID') != null) { return redirect('/home'); }
     return Inertia::render('App');
+})->name('welcome');
+
+Route::middleware(['session'])->group(function () {
+    Route::get('/home', [CreateEventController::class, 'index'])->name('home');
+
+    Route::get('/event/create', function () {
+        return Inertia::render('EventCreate');
+    });
+    
+    Route::post('/event/create', [CreateEventController::class, 'store'])->name("eventCreate");
+    
+    Route::get('/event/delete/{eventID}', [CreateEventController::class, 'askDelete']);
+    Route::post('/event/deleteTrue', [CreateEventController::class, 'destroy'])->name('trueDelete');
+    
+    Route::get('/event/update/{eventID}', [CreateEventController::class, 'update']);
+    Route::post('/event/update', [CreateEventController::class, 'storeUpdate'])->name('updateEvent');
+    
+    Route::get('/events/{eventID}', [CreateEventController::class, 'show']);
 });
-Route::get('/home', [CreateEventController::class, 'index']);
-
-Route::get('/event/create', function () {
-    return Inertia::render('EventCreate');
-});
-Route::post('/event/create', [CreateEventController::class, 'store'])->name("eventCreate");
-
-Route::get('/event/delete/{eventID}', [CreateEventController::class, 'askDelete']);
-Route::post('/event/deleteTrue', [CreateEventController::class, 'destroy'])->name('trueDelete');
-
-Route::get('/event/update/{eventID}', [CreateEventController::class, 'update']);
-Route::post('/event/update', [CreateEventController::class, 'storeUpdate'])->name('updateEvent');
-
-Route::get('/events/{eventID}', [CreateEventController::class, 'show']);
 
 Route::get('/exchange_token', function (Illuminate\Http\Request $request) {
     $params = [
@@ -43,17 +48,26 @@ Route::get('/exchange_token', function (Illuminate\Http\Request $request) {
         'code' => $request->input('code'),
         'grant_type' => 'authorization_code',
     ];
-    // dd($params);
 
     $response = Http::asForm()->withOptions(['verify' => false])->post('https://www.strava.com/oauth/token', $params);
     $data = $response->json();
+
+    if (!isset($data['access_token'])) return redirect('/');
 
     // dd($data);
     $access_token = $data['access_token'];
     $username = $data['athlete']['username'];
     $id = $data['athlete']['id'];
 
-    $user = User::create([
+    // dd(count(User::where('stravaID', $id)->get()));
+
+    if (count(User::where('stravaID', $id)->get()) != 0) {
+        session(['stravaID' => $id, 'authenticationToken' => $access_token, 'username' => $username]);
+
+        return redirect()->route('home');
+    } 
+    
+    $user = User::firstOrCreate(['stravaID' => $id], [
         'username' => $username,
         'stravaID' => $id,
         'authenticationToken' => $access_token,
@@ -61,17 +75,15 @@ Route::get('/exchange_token', function (Illuminate\Http\Request $request) {
 
     $user->save();
 
-    // TODO: Store the access token or use it to make API calls to Strava
-    // $response = Http::withToken($access_token)->get('https://www.strava.com/api/v3/athlete%27);
-    // $data = $response->json();
-
     return redirect('/home');
 });
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/home', function () {
-//         return Inertia::render('Home');
-//     });
-// });
+Route::post('/logout', function() {
+    session()->forget('stravaID');
+    session()->forget('username');
+    session()->forget('authenticationToken');
 
-require __DIR__.'/auth.php';
+    return redirect()->route('welcome');
+})->name('logout');
+
+// require __DIR__.'/auth.php';

@@ -43,6 +43,16 @@
     > label {font-family: "Orgon"; }
 }
 
+.challenge--input--checkbox {
+    flex-direction: row;
+
+    input {
+        width: 15px;
+        height: 15px;
+        margin-left: 5px;
+    }
+}
+
 .create--title {
     text-align: center;
     font-family: "Galano-medium";

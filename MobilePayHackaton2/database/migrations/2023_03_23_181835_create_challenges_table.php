@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('max_score');
             $table->string('type');
             $table->double('total_distance_km', 8, 2);
+            $table->boolean('hasEnded')->default(0);
+
+            $table->string('stravaID');
 
             $table->timestamps();
         });

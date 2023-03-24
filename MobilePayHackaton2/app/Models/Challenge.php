@@ -14,7 +14,9 @@ class Challenge extends Model
         'description',
         'max_score',
         'type',
-        'total_distance_km'
+        'total_distance_km',
+        'stravaID',
+        'hasEnded'
     ];
 
     /**

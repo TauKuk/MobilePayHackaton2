@@ -28,8 +28,8 @@ export default function LandingPage() {
                             <h2 className="landing--name">MobilePay Sports</h2>
 
                             <div className="landing--description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            </div>   
+                            Go beyond the finish line with MobilePay sports!
+MobilePay sports is the perfect platform to get fit, challenge yourself and have fun while doing it. Whether you are a seasoned athlete or just getting started, we have something for everyone.                            </div>   
                         </div>
 
                         <div className="landing--popup--animation">
