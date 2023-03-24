@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Challenge;
+use App\Models\ChallengeActivity;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Http;
+use App\Models\User;
+use DateTime;
 
 class CreateEventController extends Controller
 {
@@ -78,11 +82,42 @@ class CreateEventController extends Controller
             'hasEnded' => 0,
         ]);
 
+        $challengeActivity = ChallengeActivity::create([
+            'stravaID' => session('stravaID'),
+            'challengeID' => $challenge->id,
+            'startingDistance' => 0,
+        ]);
+
         $challenge->save();
+        $challengeActivity->save();
 
         $challenges = Challenge::all();
         return Inertia::render('Home', compact("challenges"));        
     }
+
+    function updateChallengesFromStrava() {
+        // Get the user's access token from the database or session
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $access_token = $user->access_token;
+    
+        $start_time = date('Y-m-d H:i:s');
+        $dt = new DateTime($start_time);
+        $iso_date_time = $dt->format(DateTime::ISO8601);
+        $dist = 0;
+        
+        $challenges = Challenge::where('hasEnded', true)
+        ->get();
+        foreach ($challenges as $challenge) {
+                // Use the Strava API to create a new activity
+                $response = Http::withToken($access_token)->post('https://www.strava.com/api/v3/activities', [
+                'type' => $challenge->activity_type,
+                'start_date_local' => $challenge->$iso_date_time,
+                'elapsed_time' => $challenge->$dist,
+                'total_distance_km' => $challenge->distance*1000,
+            ]);
+        }
+    }   
 
     private function validateCreate(Request $request) {
         return $request->validate([

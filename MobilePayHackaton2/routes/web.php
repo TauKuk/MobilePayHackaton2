@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CreateEventController;
+use App\Http\Controllers\JoinChallengeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,8 @@ Route::middleware(['session'])->group(function () {
     Route::post('/event/update', [CreateEventController::class, 'storeUpdate'])->name('updateEvent');
     
     Route::get('/events/{eventID}', [CreateEventController::class, 'show']);
+
+    Route::get('/event/{eventID}/join', [JoinChallengeController::class, 'index']);
 });
 
 Route::get('/exchange_token', function (Illuminate\Http\Request $request) {
@@ -67,11 +69,12 @@ Route::get('/exchange_token', function (Illuminate\Http\Request $request) {
         return redirect()->route('home');
     } 
     
-    $user = User::firstOrCreate(['stravaID' => $id], [
+    $user = User::Create([
         'username' => $username,
         'stravaID' => $id,
         'authenticationToken' => $access_token,
     ]);
+    session(['stravaID' => $id, 'authenticationToken' => $access_token, 'username' => $username]);
 
     $user->save();
 

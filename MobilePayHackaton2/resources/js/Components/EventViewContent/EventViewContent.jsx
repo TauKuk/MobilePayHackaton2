@@ -29,6 +29,16 @@ export default function EventViewContent() {
                     </div>
 
                     {
+                        (challenge.stravaID != stravaID && !challenge.hasEnded )                  
+                            &&
+                        (
+                            <div className="event--buttons">
+                                <a href={"/event/" + challenge.id + '/join'}>Prisijungti</a>
+                            </div>
+                        )
+                    }
+
+                    {
                         challenge.stravaID == stravaID                   
                             &&
                         (
