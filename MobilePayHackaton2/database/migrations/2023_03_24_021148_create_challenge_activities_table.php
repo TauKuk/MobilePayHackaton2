@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('challengeID');
             $table->string('stravaID');
             $table->double('startingDistance', 8, 2);
-
+            $table->boolean('uploadedToStrava')->default(0);
+            
             $table->timestamps();
         });
     }

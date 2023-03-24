@@ -17,11 +17,25 @@ class CreateEventController extends Controller
         return Inertia::render('Home', compact("challenges"));        
     }
 
-    public function show($eventID) {       
-        $challenge = Challenge::where('id', $eventID)->get();
-        $stravaID = session('stravaID');
+    public function show($eventID) {
+        $challenge = Challenge::where('id', $eventID)->get();     
+        $users = User::all();
+        $stravaID = session("stravaID");
 
-        return Inertia::render('Event', compact("challenge", 'stravaID'));           
+        $usernames = [];
+        $distances = [];
+
+        $distance = $this->findDistance($eventID, session("stravaID"));
+
+        foreach ($users as $user) {
+            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) array_push($usernames, $user->username);
+            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) array_push($distances, $this->findDistance($eventID, $user->stravaID));
+        }
+
+        $hasJoined = true;
+        if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) == 0) $hasJoined=false;
+
+        return Inertia::render('Event', compact("challenge", 'stravaID', 'distance', 'usernames', 'distances', 'hasJoined'));           
     }
 
     public function askDelete($eventID) {     
@@ -55,8 +69,58 @@ class CreateEventController extends Controller
             'hasEnded' => $data['hasEnded']
         ]);
 
+        if ($request->hasEnded) $this->updateChallengesFromStrava();
+
         $challenges = Challenge::all();
         return Inertia::render('Home', compact("challenges"));        
+    }
+
+    function updateChallengesFromStrava() {
+
+        $users =  User::whereNotNull("authenticationToken")->get();
+        foreach ($users as $user){
+            $access_token = $user->authenticationToken;
+            $SID = $user->stravaID;
+
+            $athleteStats= $this->getAthleteStats($SID,$access_token);
+            $totalDistance = $athleteStats["all_run_totals"]["distance"];
+            $start_time = date('Y-m-d H:i:s');
+            $dt = new DateTime($start_time);
+            $iso_date_time = $dt->format(DateTime::ISO8601);
+            $dist = 0;
+            $challenges = Challenge::where('hasEnded', true)
+            ->get();
+            foreach ($challenges as $challenge) {
+                    $res = $this->findChallengeActivity($user['stravaID'] , $challenge['id']);
+                    if ($res['uploadedToStrava'] == null) continue;
+                    if($res['uploadedToStrava']) continue;
+                    // Use the Strava API to create a new activity
+                    $response = Http::withToken($access_token)->post('https://www.strava.com/api/v3/activities', [
+                    'type' => $challenge->activity_type,
+                    'start_date_local' => $iso_date_time,
+                    'elapsed_time' => $dist,
+                    'total_distance_km' => $challenge->$totalDistance-$res['total_distance_km']*1000,
+                ]);
+                ChallengeActivity::where('stravaID',  $user['stravaID'])->where('challengeID', $challenge['stravaID'])->update([
+                    'uploadedToStrava' => true,
+                ]);
+            }
+        }
+    }   
+
+    private function findChallengeActivity($stravaID, $eventID) {
+        $user = ChallengeActivity::where('stravaID',$stravaID)
+                    ->where('challengeID',$eventID)
+                    ->first();
+        return $user;
+    }
+
+    private function getAthleteStats($athlete_id, $access_token) {
+        $response = Http::withOptions(['verify' => false])->withHeaders([
+            'Authorization' => 'Bearer ' . $access_token,
+        ])->get('https://www.strava.com/api/v3/athletes/' . $athlete_id . '/stats');
+        // dd($access_token);
+        return $response->json();
     }
 
     public function destroy(Request $request) { 
@@ -72,6 +136,17 @@ class CreateEventController extends Controller
         $request['hasEnded'] = false;
         $data = $this->validateCreate($request);
 
+        $authentication_token = User::where('stravaID', session('stravaID'))->get()->first();
+            if (!$authentication_token) {            
+                $authentication_token = null;
+            }        
+        else $authentication_token = $authentication_token->authenticationToken;
+
+        $response = $this->getAthleteStats(session('stravaID'), $authentication_token);
+
+        $tempDistance=$response["all_run_totals"]["distance"];
+        $tempDistance = round($tempDistance/1000, 2);
+
         $challenge = Challenge::create([
             'name' => $data['name'],
             'description' => $data['description'],
@@ -84,8 +159,9 @@ class CreateEventController extends Controller
 
         $challengeActivity = ChallengeActivity::create([
             'stravaID' => session('stravaID'),
+            
             'challengeID' => $challenge->id,
-            'startingDistance' => 0,
+            'startingDistance' => $tempDistance ,
         ]);
 
         $challenge->save();
@@ -95,30 +171,51 @@ class CreateEventController extends Controller
         return Inertia::render('Home', compact("challenges"));        
     }
 
-    function updateChallengesFromStrava() {
-        // Get the user's access token from the database or session
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        $access_token = $user->access_token;
-    
-        $start_time = date('Y-m-d H:i:s');
-        $dt = new DateTime($start_time);
-        $iso_date_time = $dt->format(DateTime::ISO8601);
-        $dist = 0;
+    private function findDistance($eventID, $stravaID) {
+        // function getAthleteStats($athlete_id, $access_token) {
+        //     $response = Http::withOptions(['verify' => false])->withHeaders([
+        //         'Authorization' => 'Bearer ' . $access_token,
+        //     ])->get('https://www.strava.com/api/v3/athletes/' . $athlete_id . '/stats');
         
-        $challenges = Challenge::where('hasEnded', true)
-        ->get();
-        foreach ($challenges as $challenge) {
-                // Use the Strava API to create a new activity
-                $response = Http::withToken($access_token)->post('https://www.strava.com/api/v3/activities', [
-                'type' => $challenge->activity_type,
-                'start_date_local' => $challenge->$iso_date_time,
-                'elapsed_time' => $challenge->$dist,
-                'total_distance_km' => $challenge->distance*1000,
-            ]);
-        }
-    }   
+        //     return $response->json();
+        // }
+        // function getAccessToken($stravaID) {
+        //     $user = User::where('stravaID', $stravaID)->get()->first();
+        //     if (!$user) {            
+        //         return null;
+        //     }        
+        //     return $user->authenticationToken;
+        // }
+        // function findChallengeActivity($stravaID, $eventID) {
+        //     $user = ChallengeActivity::where('stravaID',$stravaID)
+        //                 ->where('challengeID',$eventID)
+        //                 ->first();
+        //     return $user;
+        // }
 
+        $authentication_token = User::where('stravaID', $stravaID)->get()->first();
+        if (!$authentication_token) {            
+            $authentication_token = null;
+        }        
+        else $authentication_token = $authentication_token->authenticationToken;
+
+        $response = Http::withOptions(['verify' => false])->withHeaders([
+            'Authorization' => 'Bearer ' . $authentication_token,
+        ])->get('https://www.strava.com/api/v3/athletes/' . $stravaID . '/stats')->json();
+
+        // $res = getAthleteStats($stravaID, $authentication_token);
+
+        $tempDistance=$response["all_run_totals"]["distance"];
+        $res2 = ChallengeActivity::where('stravaID',$stravaID)->where('challengeID',$eventID)->first();
+        // dd($res2->startingDistance);
+        $res2 = $res2->startingDistance;
+
+        $distance = round($tempDistance/1000, 2);
+        $distance =  $distance - $res2;
+
+        return $distance;
+    }
+    
     private function validateCreate(Request $request) {
         return $request->validate([
             'name' => ['required', 'string', 'max:50', 'min:2'],

@@ -63,11 +63,17 @@ export default function UpdateForm() {
                 <div className="edit--error">{ errors.total_distance_km }</div>
             </div>
 
-            <div className="challenge--input--container challenge--input--checkbox">
-                <label htmlFor="hasEnded">Has ended?</label>
-                <input type="checkbox" className="challenge--input" id="hasEnded"checked={ data.hasEnded } onChange={e => setData('hasEnded', e.target.checked)}/>
-                <div className="edit--error">{ errors.hasEnded }</div>
-            </div>
+            {
+                !challenge.hasEnded
+                &&
+                (
+                    <div className="challenge--input--container challenge--input--checkbox">
+                        <label htmlFor="hasEnded">Has ended?</label>
+                        <input type="checkbox" className="challenge--input" id="hasEnded"checked={ data.hasEnded } onChange={e => setData('hasEnded', e.target.checked)}/>
+                        <div className="edit--error">{ errors.hasEnded }</div>
+                    </div>
+                )
+            }
 
             <button className="create--button" type="submit" disabled={processing}>Edit challenge</button>
         </form>

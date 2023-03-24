@@ -2,9 +2,10 @@ import React from "react";
 
 import "./EventViewContent.scss"
 import { usePage } from "@inertiajs/inertia-react";
+import DrawChart from "../DrawChart/DrawChart";
 
 export default function EventViewContent() {
-    var { challenge, stravaID } = usePage().props;
+    var { challenge, stravaID, distance, usernames, distances, hasJoined} = usePage().props;
 
     challenge = challenge[0];
     var types = {
@@ -12,6 +13,8 @@ export default function EventViewContent() {
         dviraciai: "Cycling",
         ejimas: "Walking"
     }
+
+    console.log(distances);
 
     return (
         <>
@@ -23,17 +26,18 @@ export default function EventViewContent() {
                             <div className="event--type">Type: {types[challenge.type]}</div>
                             <div className="event--track--size">Challenge length: {challenge.total_distance_km} km</div>
                             <div className="event--max--score">Max score: {challenge.max_score}</div>
+                            <div>Distance traveled: { distance }</div>
                         </div>
 
                         {challenge.description ? <div className="event--description">Description: {challenge.description}</div> : ""}
                     </div>
 
                     {
-                        (challenge.stravaID != stravaID && !challenge.hasEnded )                  
+                        (challenge.stravaID != stravaID && !challenge.hasEnded && !hasJoined)                  
                             &&
                         (
                             <div className="event--buttons">
-                                <a href={"/event/" + challenge.id + '/join'}>Log in</a>
+                                <a href={"/event/" + challenge.id + '/join'}>Join</a>
                             </div>
                         )
                     }
@@ -44,13 +48,19 @@ export default function EventViewContent() {
                         (
                             <div className="event--buttons">
                                 <a href={"/event/delete/" + challenge.id}>Delete</a>
-                                <a href={"/event/update/" + challenge.id}>Edit</a>
+                                { !challenge.hasEnded && <a href={"/event/update/" + challenge.id}>Edit</a> } 
                             </div>
                         )
                     }
 
                 </div>
             </div>
+
+            <DrawChart 
+                challengeID={challenge.id}
+                usernames={usernames}
+                distances={distances}
+            />
         </>
     )
 }
