@@ -1,10 +1,10 @@
 import React from 'react';
-import Chart from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
 import "./DrawChart.scss"
 
 import { useRef, useEffect } from 'react';
 
-export default function DrawChart({ challengeID, usernames, distances, hasEnded }) {
+export default function DrawChart({ challengeID, usernames, distances, hasEnded, maxScore }) {
     const graphCanvas = useRef(null);
     var canvas;
 
@@ -25,8 +25,9 @@ export default function DrawChart({ challengeID, usernames, distances, hasEnded 
                 y: {
                     beginAtZero: true
                 }
+                },
             }
-            }
+            
         });
     }, [graphCanvas]);
  

@@ -6,7 +6,6 @@ import DrawChart from "../DrawChart/DrawChart";
 
 export default function EventViewContent() {
     var { challenge, stravaID, distance, usernames, distances, hasJoined} = usePage().props;
-    console.log(hasJoined);
     challenge = challenge[0];
     var types = {
         begimas: "Running",
@@ -24,7 +23,7 @@ export default function EventViewContent() {
                             <div className="event--type">Type: {types[challenge.type]}</div>
                             <div className="event--track--size">Challenge length: {challenge.total_distance_km} km</div>
                             <div className="event--max--score">Max score: {challenge.max_score}</div>
-                            <div>Distance traveled: { distance }</div>
+                            <div>Distance traveled: { Math.round(distance * 100) / 100 + " km"}</div>
                         </div>
 
                         {challenge.description ? <div className="event--description">Description: {challenge.description}</div> : ""}
@@ -59,6 +58,7 @@ export default function EventViewContent() {
                 usernames={usernames}
                 distances={distances}
                 hasEnded={challenge.hasEnded}
+                maxScore={challenge.max_score}
             />
         </>
     )
