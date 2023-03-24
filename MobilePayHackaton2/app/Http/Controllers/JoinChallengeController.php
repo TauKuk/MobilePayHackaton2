@@ -18,14 +18,16 @@ class JoinChallengeController extends Controller
             return $response->json();
         }
         function getAccessToken($stravaID) {
-            $user = User::find($stravaID);
+            $user = User::where("StravaID", $stravaID)->get()->first();
             if (!$user) {
                 return null;
             }
-            return $user->access_token;
+            return $user->authenticationToken;
         }
 
-        $res = getAthleteStats(session('stravaID'),getAccessToken(session('stravaID')));
+        $res = getAthleteStats(session('stravaID'), getAccessToken(session('stravaID')));
+
+        if (!isset($res["all_run_totals"]["distance"])) $distace = 0;
         $distace = round($res["all_run_totals"]["distance"]/1000, 2);
 
         $challengeActivity = ChallengeActivity::create([

@@ -22,7 +22,7 @@ class StravaService
         foreach ($users as $user) {
             // Get the user's access token from the database or session
             try{
-                $access_token = $user->access_token;
+                $access_token = $user->authenticationToken;
                 $athlete_id = $user->stravaID;
     
                 $response = getAthleteStats($athlete_id, $access_token) ;

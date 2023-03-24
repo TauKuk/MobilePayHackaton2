@@ -4,14 +4,11 @@ import "./DrawChart.scss"
 
 import { useRef, useEffect } from 'react';
 
-export default function DrawChart({ challengeID, usernames, distances }) {
+export default function DrawChart({ challengeID, usernames, distances, hasEnded }) {
     const graphCanvas = useRef(null);
     var canvas;
 
-    console.log(distances);
-
     useEffect(() => {
-        console.log(graphCanvas.current);
         canvas = graphCanvas.current.getContext('2d');
         new Chart(canvas, {
             type: 'bar',
@@ -32,11 +29,10 @@ export default function DrawChart({ challengeID, usernames, distances }) {
             }
         });
     }, [graphCanvas]);
-
-    
-     
+ 
     return (
         <div className='graph--container'>
+            <div className='canvas--title'>{hasEnded ? "Final results" : "Intermediate results"}</div>
             <canvas ref={graphCanvas} id={challengeID} className='chart' width={"400px"} height={"400px"}></canvas>
         </div>
     )

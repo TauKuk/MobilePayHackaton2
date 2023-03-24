@@ -13,6 +13,7 @@ class ChallengeActivity extends Model
         'challengeID',
         'stravaID',
         'startingDistance',
-        'uploadedToStrava'
+        'uploadedToStrava',
+        'finalDistance'
     ];
 }

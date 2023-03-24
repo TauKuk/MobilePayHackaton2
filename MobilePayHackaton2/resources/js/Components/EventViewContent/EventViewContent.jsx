@@ -6,15 +6,13 @@ import DrawChart from "../DrawChart/DrawChart";
 
 export default function EventViewContent() {
     var { challenge, stravaID, distance, usernames, distances, hasJoined} = usePage().props;
-
+    console.log(hasJoined);
     challenge = challenge[0];
     var types = {
         begimas: "Running",
         dviraciai: "Cycling",
         ejimas: "Walking"
     }
-
-    console.log(distances);
 
     return (
         <>
@@ -60,6 +58,7 @@ export default function EventViewContent() {
                 challengeID={challenge.id}
                 usernames={usernames}
                 distances={distances}
+                hasEnded={challenge.hasEnded}
             />
         </>
     )

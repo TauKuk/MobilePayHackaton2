@@ -25,15 +25,24 @@ class CreateEventController extends Controller
         $usernames = [];
         $distances = [];
 
-        $distance = $this->findDistance($eventID, session("stravaID"));
+        if (count(ChallengeActivity::where('stravaID', session("stravaID"))->where('challengeID', $eventID)->get()) != 0) $distance = $this->findDistance($eventID, session("stravaID"));
+        else $distance = 0;
 
         foreach ($users as $user) {
-            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) array_push($usernames, $user->username);
-            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) array_push($distances, $this->findDistance($eventID, $user->stravaID));
+            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) {
+                array_push($usernames, $user->username);
+            }
+
+            if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) != 0) {
+                $challengeActivity = ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()->first();
+                $challengeCheck = $challenge->first();
+                if (!$challengeCheck->hasEnded) array_push($distances, $this->findDistance($eventID, $user->stravaID));
+                else array_push($distances, $challengeActivity->finalDistance);
+            }
         }
 
         $hasJoined = true;
-        if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $eventID)->get()) == 0) $hasJoined=false;
+        if (count(ChallengeActivity::where('stravaID', $stravaID)->where('challengeID', $eventID)->get()) == 0) $hasJoined=false;
 
         return Inertia::render('Event', compact("challenge", 'stravaID', 'distance', 'usernames', 'distances', 'hasJoined'));           
     }
@@ -66,10 +75,23 @@ class CreateEventController extends Controller
             'type' => $data['type'],
             'total_distance_km' => $data['total_distance_km'],
             'stravaID' => session('stravaID'),
-            'hasEnded' => $data['hasEnded']
+            'hasEnded' => $data['hasEnded'],
         ]);
 
-        if ($request->hasEnded) $this->updateChallengesFromStrava();
+        if ($request->hasEnded) {
+            $this->updateChallengesFromStrava();
+
+            $users = User::all();
+
+            foreach ($users as $user) {
+                if (count(ChallengeActivity::where('stravaID', $user->stravaID)->where('challengeID', $request->id)->get()) != 0) {
+                    $final_distance = $this->findDistance($request->id, $user->stravaID);
+                    ChallengeActivity::where("stravaID", $user->stravaID)->where("challengeID", $request->id)->update([
+                        "finalDistance" => $final_distance,
+                    ]); 
+                }  
+            }
+        }
 
         $challenges = Challenge::all();
         return Inertia::render('Home', compact("challenges"));        
@@ -90,6 +112,7 @@ class CreateEventController extends Controller
             $dist = 0;
             $challenges = Challenge::where('hasEnded', true)
             ->get();
+
             foreach ($challenges as $challenge) {
                     $res = $this->findChallengeActivity($user['stravaID'] , $challenge['id']);
                     if ($res['uploadedToStrava'] == null) continue;

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('stravaID');
             $table->double('startingDistance', 8, 2);
             $table->boolean('uploadedToStrava')->default(0);
+            $table->double('finalDistance', 8, 2)->default(0);
             
             $table->timestamps();
         });
