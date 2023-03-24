@@ -40,7 +40,7 @@ MobilePay sports is the perfect platform to get fit, challenge yourself and have
             </div>
 
             <div className="landing--challenges">
-                <h3 className="challenges--title">Prisijunk prie iššūkio</h3>
+                <h3 className="challenges--title">Join the challenge</h3>
                 <div className="landing--tiles">
                     { LandingTiles }
                 </div>

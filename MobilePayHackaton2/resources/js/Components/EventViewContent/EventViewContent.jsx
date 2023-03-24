@@ -8,9 +8,9 @@ export default function EventViewContent() {
 
     challenge = challenge[0];
     var types = {
-        begimas: "Bėgimas",
-        dviraciai: "Dviračiai",
-        ejimas: "Ėjimas"
+        begimas: "Running",
+        dviraciai: "Cycling",
+        ejimas: "Walking"
     }
 
     return (
@@ -20,12 +20,12 @@ export default function EventViewContent() {
                     <div className="event--info">
                         <div className="event--basic--info">
                             <h2 className="event--title">{challenge.name}</h2>
-                            <div className="event--type">Tipas: {types[challenge.type]}</div>
-                            <div className="event--track--size">Iššūkio atstumas: {challenge.total_distance_km} km</div>
-                            <div className="event--max--score">Maksimalus taškų skaičius: {challenge.max_score}</div>
+                            <div className="event--type">Type: {types[challenge.type]}</div>
+                            <div className="event--track--size">Challenge length: {challenge.total_distance_km} km</div>
+                            <div className="event--max--score">Max score: {challenge.max_score}</div>
                         </div>
 
-                        {challenge.description ? <div className="event--description">Aprašymas: {challenge.description}</div> : ""}
+                        {challenge.description ? <div className="event--description">Description: {challenge.description}</div> : ""}
                     </div>
 
                     {
@@ -33,7 +33,7 @@ export default function EventViewContent() {
                             &&
                         (
                             <div className="event--buttons">
-                                <a href={"/event/" + challenge.id + '/join'}>Prisijungti</a>
+                                <a href={"/event/" + challenge.id + '/join'}>Log in</a>
                             </div>
                         )
                     }
@@ -43,8 +43,8 @@ export default function EventViewContent() {
                             &&
                         (
                             <div className="event--buttons">
-                                <a href={"/event/delete/" + challenge.id}>Ištrinti</a>
-                                <a href={"/event/update/" + challenge.id}>Redaguoti</a>
+                                <a href={"/event/delete/" + challenge.id}>Delete</a>
+                                <a href={"/event/update/" + challenge.id}>Edit</a>
                             </div>
                         )
                     }

@@ -1,17 +1,17 @@
 export default [
     {
         img: 'Landing-begimas',
-        txt: "Bėgimas",
+        txt: "Running",
         clr: '#3da7b6',
     },    
     {
         img: 'Landing-ejimas',
-        txt: "Ėjimas",
+        txt: "Walking",
         clr: '#3da7b6',
     },
     {
         img: 'Landing-vaziavimas',
-        txt: "Važiavimas",
+        txt: "Cycling",
         clr: '#3da7b6',
     },
 

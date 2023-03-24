@@ -24,10 +24,10 @@ function Event() {
                 <main>        
                     <NavBarAuth />
                     <div className='delete--confirmation'>
-                        <h2 className='delete--title'>Ar tikrai norite ištrinti iššūkį?</h2>
+                        <h2 className='delete--title'>Are you sure you want to delete the challenge?</h2>
                         
                         <form onSubmit={submit}>
-                            <button className="event--button" type="submit">Ištrinti</button>    
+                            <button className="event--button" type="submit">Delete</button>    
                         </form>
                     </div>
                 </main>

@@ -9,7 +9,7 @@ export default function Footer() {
                 <div className="footer--copyright">
                     &copy; 2023 MobilePay Sports
                     <br/>
-                    <div>Visos teisės saugomos</div>
+                    <div>All rights reserved</div>
                 </div>
             </footer>
         </>

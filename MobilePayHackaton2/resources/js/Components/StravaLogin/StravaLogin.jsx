@@ -9,6 +9,6 @@ export default function StravaLogin() {
   const authUrl = `http://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}/exchange_token&approval_prompt=force&scope=${scope}`;
 
   return (
-      <a href={authUrl}>Prisijungti</a>
+      <a href={authUrl}>Log in</a>
   );
 };

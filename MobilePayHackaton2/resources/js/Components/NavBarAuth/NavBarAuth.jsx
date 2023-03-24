@@ -26,8 +26,8 @@ export default function NavBarAuth() {
                     </label>  
 
                     <ul className="nav--links">
-                        <li><a href="/event/create">Sukurti iššūkį</a></li>
-                        <li><Link href={route('logout')} method="post">Atsijungti</Link></li>
+                        <li><a href="/event/create">Create challenge</a></li>
+                        <li><Link href={route('logout')} method="post">Log out</Link></li>
                     </ul>
                 </div>
                 <div className='burger--bottom'
@@ -37,8 +37,8 @@ export default function NavBarAuth() {
                         transition: (openBurger ? "opacity 0.2s" : "opacity 0s")
                     }}>
                         <ul className='burger--links'>                            
-                            <li onClick={handleOpenBurger}><a href="/event/create">Sukurti iššūkį</a></li>
-                            <li onClick={handleOpenBurger}><Link href={route('logout')} method="post">Atsijungti</Link></li>
+                            <li onClick={handleOpenBurger}><a href="/event/create">Create challenge</a></li>
+                            <li onClick={handleOpenBurger}><Link href={route('logout')} method="post">Log out</Link></li>
                         </ul>
                 </div>
             </nav>
